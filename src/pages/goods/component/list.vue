@@ -14,13 +14,13 @@
         width="80px"
       ></el-table-column>
       <el-table-column
-        prop="username"
+        prop="goodsname"
         label="商品名称"
         sortable
          width="80px"
       ></el-table-column>
       <el-table-column
-        prop="rolename"
+        prop="price"
         label="商品价格"
         sortable
         width="80px"
@@ -37,17 +37,28 @@
     
       
       <el-table-column
-        prop="rolename"
+        prop="isnew"
         label="是否新品"
         sortable
       
-      ></el-table-column>
+      >
+      <template slot-scope="scope">
+        <el-tag  v-if="scope.row.isnew==1">是</el-tag>
+        <el-tag  v-else>否</el-tag>
+        
+      </template>
+      </el-table-column>
       <el-table-column
-        prop="rolename"
+        prop="ishot"
         label="是否热卖"
         sortable
-       
-      ></el-table-column>
+      >
+      <template slot-scope="scope">
+        <el-tag  v-if="scope.row.ishot==1">是</el-tag>
+        <el-tag  v-else>否</el-tag>
+        
+      </template>
+      </el-table-column>
 
 
       <el-table-column prop="status" label="状态">
@@ -62,10 +73,10 @@
       <el-table-column prop="status" label="操作" >
         
             <template slot-scope="scope">
-          <el-button type="primary" @click="edit(scope.row.uid)"
+          <el-button type="primary" @click="edit(scope.row.id)"
             >编辑</el-button
           >
-          <el-button type="danger" @click="del(scope.row.uid)">删除</el-button>
+          <el-button type="danger" @click="del(scope.row.id)">删除</el-button>
         </template>
        
       </el-table-column>
@@ -84,7 +95,7 @@
 </template>
 
 <script>
-import { reqManageDel } from "../../../utils/ruquest";
+import { reqGoodsdel } from "../../../utils/ruquest";
 import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
@@ -118,7 +129,7 @@ export default {
         type: "warning",
       })
         .then(() => {
-          reqManageDel(id).then((res) => {
+          reqGoodsdel(id).then((res) => {
             if (res.data.code == 200) {
               this.$message({
                 type: "success",

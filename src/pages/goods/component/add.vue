@@ -140,6 +140,7 @@ export default {
       //改变父级下拉菜单
       //二级菜单
       changefirst(){
+        this.form.second_cateid='';
         reqCatelist({pid:this.form.first_cateid}).then(res=>{
           this.secondcatelist=res.data.list;
         })
@@ -206,19 +207,35 @@ export default {
     display() {
       this.info.isshow = false;
     },
-    reqone(uid) {
-      reqManageDetail(uid).then((res) => {
-        this.form = res.data.list;
-        this.form.password = '';
+    reqone(id) {
+
+      reqGoodsinfo(id).then((res) => {
+        if(res.data.code==200){
+            this.form = res.data.list;
+            this.form.id=id;
+            this.changefirst();
+            this.imgurl=this.$imgpre+this.form.img;
+            this.form.specsattr=JSON.parse(this.form.specsattr)
+            this.getattr(); 
+        }else{
+          warningAlert(res.data.msg)
+        }
+       
+
       });
     },
     update() {
-      reqManageUpdate(this.form).then((res) => {
+
+      let data = {
+        ...this.form,
+        specsattr:JSON.stringify(this.form.specsattr)
+      }
+      console.log(data);
+      reqGoodsedit(data).then((res) => {
         if (res.data.code == 200) {
-          this.reqManagelistaction();
+          this.reqGoodslistaction();
           this.clearcon();
           this.display();
-
           successAlert(res.data.msg);
         } else {
           warningAlert(res.data.msg);
@@ -227,7 +244,7 @@ export default {
     },
     ...mapActions({
       reqCatelistaction: "cate/reqlistaction",
-      reqtotalaction: "manage/reqtotalaction",
+      reqtotalaction: "goods/reqtotalaction",
       reqManagelistaction: "manage/reqlistaction",
       reqSpecslistaction: "specs/reqlistaction",
       reqGoodslistaction: "goods/reqlistaction",

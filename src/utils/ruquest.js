@@ -313,6 +313,7 @@ export const reqGoodsedit=(obj)=>{
     }
     return axios({
         url:baseurl+'/api/goodsedit',
+        method:'post',
         data:data,
     })
 
@@ -321,7 +322,8 @@ export const reqGoodsedit=(obj)=>{
 export const reqGoodsdel=(id)=>{
     return axios({
         url:baseurl+"/api/goodsdelete",
-        params:{
+        method:"post",
+        data:{
             id,
         }
     })

@@ -36,7 +36,7 @@ const actions={
             // list.forEach(item => {
             //     item.attrs = JSON.parse(item.attrs)
             // })
-            list.forEach(item =>item.attrs=JSON.parse(item.attrs));
+           
             context.commit('changelist',list)
         })
     },

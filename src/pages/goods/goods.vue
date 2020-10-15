@@ -33,10 +33,10 @@ export default {
       this.info.isedit=false;
     },
 
-    edit(uid){
+    edit(id){
       this.info.isshow=true;
       this.info.isedit=true;
-      this.$refs.add.reqone(uid)
+      this.$refs.add.reqone(id)
       
     }
     
